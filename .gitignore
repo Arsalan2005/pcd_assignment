@@ -57,3 +57,4 @@ dkms.conf
 # Project specific
 lexer
 
+_codeql_detected_source_root

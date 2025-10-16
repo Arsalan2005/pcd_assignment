@@ -53,3 +53,8 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Project specific
+lexer
+
+_codeql_detected_source_root

@@ -71,7 +71,7 @@ static Token readIdentifier() {
     token.column = column;
     int i = 0;
     
-    while (isalnum(peek()) || peek() == '_') {
+    while ((isalnum(peek()) || peek() == '_') && i < 255) {
         token.lexeme[i++] = advance();
     }
     token.lexeme[i] = '\0';
@@ -93,7 +93,7 @@ static Token readNumber() {
     token.column = column;
     int i = 0;
     
-    while (isdigit(peek()) || peek() == '.') {
+    while ((isdigit(peek()) || peek() == '.') && i < 255) {
         token.lexeme[i++] = advance();
     }
     token.lexeme[i] = '\0';
@@ -111,10 +111,10 @@ static Token readString() {
     
     token.lexeme[i++] = advance(); // Opening quote
     
-    while (peek() != '"' && peek() != '\0') {
+    while (peek() != '"' && peek() != '\0' && i < 254) {
         if (peek() == '\\') {
             token.lexeme[i++] = advance();
-            if (peek() != '\0') {
+            if (peek() != '\0' && i < 254) {
                 token.lexeme[i++] = advance();
             }
         } else {
@@ -122,7 +122,7 @@ static Token readString() {
         }
     }
     
-    if (peek() == '"') {
+    if (peek() == '"' && i < 255) {
         token.lexeme[i++] = advance(); // Closing quote
     }
     token.lexeme[i] = '\0';
@@ -140,10 +140,10 @@ static Token readChar() {
     
     token.lexeme[i++] = advance(); // Opening quote
     
-    while (peek() != '\'' && peek() != '\0') {
+    while (peek() != '\'' && peek() != '\0' && i < 254) {
         if (peek() == '\\') {
             token.lexeme[i++] = advance();
-            if (peek() != '\0') {
+            if (peek() != '\0' && i < 254) {
                 token.lexeme[i++] = advance();
             }
         } else {
@@ -151,7 +151,7 @@ static Token readChar() {
         }
     }
     
-    if (peek() == '\'') {
+    if (peek() == '\'' && i < 255) {
         token.lexeme[i++] = advance(); // Closing quote
     }
     token.lexeme[i] = '\0';
